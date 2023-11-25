@@ -1,0 +1,5 @@
+	CREATE TABLE `navpages` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `title` varchar(255) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
