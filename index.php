@@ -6,7 +6,6 @@
     <link href='https://fonts.googleapis.com/css?family=Electrolize' rel = 'stylesheet'>
     <title>Aesir Store</title>
 </head>
-
 <style>
     body
     {
@@ -136,20 +135,33 @@
             echo "<a class = 'menu {$active}' href = '?id={$row['id']}'> <li class ='menu'>{$row['title']}</li></a>";
         }
         echo "</ul>";
+        echo "</div>";
         ?>
-    </div>
-    <!-- background image -->
-    <div id ="background"></div>
-    <!-- content for index page -->
-    <div class = "content">
-        <p id ="welcome">
-        Welcome to Æsir Store!
-        </p id="">
-        <p id = "message">
-            Fusce erat dui, venenatis et erat in, vulputate dignissim lacus. <br>
-            Donec vitae tempus dolor,sit amet elementum lorem. <br>
-            Ut cursus tempor turpis.
-        </p>
-    </div>
+        <?php
+         $id = $_GET["id"];
+         switch ($id)
+         {
+            //homepage content
+            case "1":
+            
+                //background image
+                echo "<div id ='background'></div>";
+                //content for index page
+                echo "<div class = 'content'>";
+                echo "<p id ='welcome'>
+                Welcome to Æsir Store!
+                </p>";
+                echo "<p id = 'message'>
+                    Fusce erat dui, venenatis et erat in, vulputate dignissim lacus. <br>
+                    Donec vitae tempus dolor,sit amet elementum lorem. <br>
+                    Ut cursus tempor turpis.
+                </p>";
+                echo "</div>";
+            break;
+            //categories content
+            case "2":
+            break;
+         }
+        ?>
 </body>
 </html>
