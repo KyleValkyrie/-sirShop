@@ -12,6 +12,29 @@
         background-color: black;
         font-family: 'Electrolize';
     }
+    table
+    {
+        margin-left: auto;
+        margin-right: auto;
+        background-color:black;
+        color:white;
+        width:80%;
+        border: 1px solid;
+        border-spacing: 3px;
+    }
+    th, td
+    {
+    padding: 10px;
+    }
+    img
+    {
+        width:200px;
+        height:150px;
+    }
+    tr
+    {
+        height:50px;
+    }
     #welcome
     {
         font-size: 40px;
@@ -106,39 +129,38 @@
         //get db config
         include_once("db_config.php");
         //conditioning for id
-        $id = null;
+        $idPage = null;
         if(isset($_GET["id"]))
         {
-            $id = $_GET["id"];
+            $idPage = $_GET["id"];
         }
         //setup connection
-        $cn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-        if($cn->connect_error)
+        $cnPage = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+        if($cnPage->connect_error)
         {
-            die("Error connecting: ". $cn->connect_error);
+            die("Error connecting: ". $cnPage->connect_error);
         }
-        $sql = "select id, title from navpages order by id";
-        $result = $cn->query($sql);
-        $result = $cn->query($sql);
+        $sqlPage = "select id, title from navpages order by id";
+        $resultPage = $cnPage->query($sqlPage);
         echo "<ul class ='menu'>";
-        while($row = $result->fetch_assoc())
+        while($rowPage = $resultPage->fetch_assoc())
         {
-            if($id === null)
+            if($idPage === null)
             {
-                $id = $row["id"];
+                $idPage = $rowPage["id"];
             }
-            $active = "";
-            if($row["id"] == $id)
+            $activePage = "";
+            if($rowPage["id"] == $idPage)
             {
-                $active = "active";
+                $activePage = "active";
             }
-            echo "<a class = 'menu {$active}' href = '?id={$row['id']}'> <li class ='menu'>{$row['title']}</li></a>";
+            echo "<a class = 'menu {$activePage}' href = '?id={$rowPage['id']}'> <li class ='menu'>{$rowPage['title']}</li></a>";
         }
         echo "</ul>";
         ?>
         </div>
         <?php
-         switch ($id)
+         switch ($idPage)
          {
             //homepage content
             default:
@@ -171,7 +193,30 @@
             break;
                 //blog content
             case"5":
-                
+                $idBlog = null;
+                $cnBlog = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+                if($cnBlog->connect_error)
+                {
+                    die("Error connecting: ". $cnBlog->connect_error);
+                }
+                $sqlBlog = "select id, title, description, imageLink from blogs order by id";
+                $resultBlog = $cnBlog->query($sqlBlog);
+                while($rowBlog = $resultBlog->fetch_assoc())
+                {
+                    if($idBlog === null)
+                    {
+                        $idBlog = $rowBlog["id"];
+                    }
+                    echo "<table>";
+                    echo "<tr>
+                        <td id ='img' colspan ='1' rowspan ='2'><img src = '{$rowBlog['imageLink']}'></td>
+                        <td id ='name'>{$rowBlog['title']}</td>
+                    </tr>";  
+                    echo "<tr>
+                    <td>{$rowBlog['description']}</td>
+                    </tr>";
+                    echo "</table>";              
+                }    
             break;
          }
         
