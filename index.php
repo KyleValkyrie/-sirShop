@@ -35,7 +35,7 @@
         text-align: center;
         padding-top: 25px;
     }
-    #background
+    #backgroundHomepage
     {
         padding-bottom: 10px;
         background-image: url("upscaled_artwork.jpg");
@@ -135,17 +135,16 @@
             echo "<a class = 'menu {$active}' href = '?id={$row['id']}'> <li class ='menu'>{$row['title']}</li></a>";
         }
         echo "</ul>";
-        echo "</div>";
         ?>
+        </div>
         <?php
-         $id = $_GET["id"];
          switch ($id)
          {
             //homepage content
-            case "1":
-            
+            default:
+            case "1":  
                 //background image
-                echo "<div id ='background'></div>";
+                echo "<div id ='backgroundHomepage'></div>";
                 //content for index page
                 echo "<div class = 'content'>";
                 echo "<p id ='welcome'>
@@ -158,10 +157,24 @@
                 </p>";
                 echo "</div>";
             break;
-            //categories content
+                //categories content
             case "2":
+                
+            break;
+                //news content
+            case"3":
+
+            break;
+                //contact content
+            case"4":
+
+            break;
+                //blog content
+            case"5":
+                
             break;
          }
+        
         ?>
 </body>
 </html>
