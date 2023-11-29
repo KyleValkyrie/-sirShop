@@ -19,8 +19,15 @@
         background-color:black;
         color:white;
         width:80%;
-        border: 1px solid;
-        border-spacing: 3px;
+        border: 3px solid;
+        border-color:#660D1A;
+        border-spacing: 1px;
+        border-collapse:collapse;
+    }
+    table:hover
+    {
+        color:black;
+        background-color:white;
     }
     th, td
     {
@@ -33,7 +40,7 @@
     }
     tr
     {
-        height:50px;
+        height:30px;
     }
     #welcome
     {
@@ -58,6 +65,16 @@
         text-align: center;
         padding-top: 25px;
     }
+    #nameBlog
+    {
+        font-size: 1.7rem;
+        font-weight: bold;
+        color:#660D1A;
+    }
+    #descBlog
+    {
+        height:70%;
+    }
     #backgroundHomepage
     {
         padding-bottom: 10px;
@@ -66,6 +83,11 @@
         background-repeat: no-repeat;
         background-size: cover;
         height: 720px;
+    }
+    #author, #date
+    {
+        font-size:0.9rem;
+        height:10%;
     }
     .content
     {
@@ -88,13 +110,16 @@
         display: inline;
         font-size:  = 20px;
     }
+    a:visited
+    {
+        all:unset;
+    }
     a.menu
     {
         color : white;
         margin-right: 50px;
         padding: 10px;
         text-decoration: none;
-
     }
     a.menu:hover
     {
@@ -193,13 +218,15 @@
             break;
                 //blog content
             case"5":
+                echo "<br>"; 
                 $idBlog = null;
                 $cnBlog = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
                 if($cnBlog->connect_error)
                 {
                     die("Error connecting: ". $cnBlog->connect_error);
                 }
-                $sqlBlog = "select id, title, description, imageLink from blogs order by id";
+                $sqlBlog = "select id, title, description, imageLink, authorName, dateOfPost 
+                            from blogs order by id";
                 $resultBlog = $cnBlog->query($sqlBlog);
                 while($rowBlog = $resultBlog->fetch_assoc())
                 {
@@ -209,13 +236,35 @@
                     }
                     echo "<table>";
                     echo "<tr>
-                        <td id ='img' colspan ='1' rowspan ='2'><img src = '{$rowBlog['imageLink']}'></td>
-                        <td id ='name'>{$rowBlog['title']}</td>
-                    </tr>";  
+                        <td id ='imgBlog' colspan ='1' rowspan ='4'>
+                                <img src = '{$rowBlog['imageLink']}'>
+                        </td>
+                        <td id ='nameBlog'>
+                            <a id='blogTab' href ='blog.php' style ='text-decoration:none'>
+                                {$rowBlog['title']}
+                            </a>
+                        </td>
+                          </tr>";  
                     echo "<tr>
-                    <td>{$rowBlog['description']}</td>
-                    </tr>";
-                    echo "</table>";              
+                            <td id ='author'>
+                                Author name: {$rowBlog['authorName']}
+                            </td>
+                          </tr>";
+                    echo "<tr>
+                          <td id='date'>
+                              Date: {$rowBlog['dateOfPost']}
+                          </td>
+                        </tr>";
+                    echo "<tr>
+                            <td id='descBlog'>
+                                {$rowBlog['description']}
+                            </td>
+                            </tr>";
+                    echo "</table>";  
+                    echo "<br>";   
+                    echo "<form method='post' action='blog.php' style='display:inline;'>";
+                    echo "<input type='hidden' name ='id' value = '{$idBlog}'>";
+                    echo "<input type='hidden' name ='action' value='show'>";
                 }    
             break;
          }
