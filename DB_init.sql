@@ -14,7 +14,7 @@ CREATE TABLE `blogs` (
 `description` VARCHAR NOT NULL , 
 `imageLink` TEXT NOT NULL ,
 `authorName` VARCHAR(255) NOT NULl,
-`dateOfPost` NULL DEFAULT NULL,
+`dateOfPost` DATE DEFAULT NULL,
 `content` TEXT NOT NULL, PRIMARY KEY (`id`));
 INSERT INTO `blogs` 
 (`id`, `title`, `description`, `imageLink`,'authorName','dateOfPost','content') 
