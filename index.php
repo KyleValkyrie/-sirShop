@@ -230,17 +230,25 @@
                 $resultBlog = $cnBlog->query($sqlBlog);
                 while($rowBlog = $resultBlog->fetch_assoc())
                 {
-                    if($idBlog === null)
-                    {
-                        $idBlog = $rowBlog["id"];
-                    }
+                    //submit id via js
+                    // echo "<script>
+                    // function getBlogID()
+                    // {
+                    //     document.getElementById('passedID').submit();
+                    // }
+                    // </script>";
+                    //get id via hidden form
+                      echo"<form method='post' action='blog.php' id='passedID'>
+                      <input type='submit' name='id' value='{$rowBlog['id']}'/>
+                      </form>";
+                    //present page
                     echo "<table>";
                     echo "<tr>
                         <td id ='imgBlog' colspan ='1' rowspan ='4'>
                                 <img src = '{$rowBlog['imageLink']}'>
                         </td>
-                        <td id ='nameBlog'>
-                            <a id='blogTab' href ='blog.php' style ='text-decoration:none'>
+                        <td id ='nameBlog'>                  
+                            <a id='blogTab' href ='blog.php' onclick='getBlogID()' style ='text-decoration:none'>
                                 {$rowBlog['title']}
                             </a>
                         </td>
@@ -261,10 +269,7 @@
                             </td>
                             </tr>";
                     echo "</table>";  
-                    echo "<br>";   
-                    echo "<form method='post' action='blog.php' style='display:inline;'>";
-                    echo "<input type='hidden' name ='id' value = '{$idBlog}'>";
-                    echo "<input type='hidden' name ='action' value='show'>";
+                    echo "<br>";                  
                 }    
             break;
          }
