@@ -77,12 +77,13 @@
     }
     #backgroundHomepage
     {
+        posiion:absolute;
         padding-bottom: 10px;
         background-image: url("upscaled_artwork.jpg");
         filter: blur(1px);
         background-repeat: no-repeat;
-        background-size: cover;
-        height: 720px;
+        height: 900px;
+        background-size: 100% 100%;
     }
     #author, #date
     {
@@ -230,17 +231,17 @@
                 $resultBlog = $cnBlog->query($sqlBlog);
                 while($rowBlog = $resultBlog->fetch_assoc())
                 {
-                    //submit id via js
-                    // echo "<script>
-                    // function getBlogID()
-                    // {
-                    //     document.getElementById('passedID').submit();
-                    // }
-                    // </script>";
                     //get id via hidden form
-                      echo"<form method='post' action='blog.php' id='passedID'>
-                      <input type='submit' name='id' value='{$rowBlog['id']}'/>
-                      </form>";
+                    echo"<form method='post' action='blog.php' id='{$rowBlog['id']}'>
+                      <input type='hidden' name='blogID' value='{$rowBlog['id']}'/>
+                      </form>"; 
+                    //submit id via js
+                    echo "<script>
+                        function getBlogID{$rowBlog['id']}()
+                        {
+                            document.getElementById('{$rowBlog['id']}').submit();
+                        }
+                        </script>";
                     //present page
                     echo "<table>";
                     echo "<tr>
@@ -248,7 +249,7 @@
                                 <img src = '{$rowBlog['imageLink']}'>
                         </td>
                         <td id ='nameBlog'>                  
-                            <a id='blogTab' href ='blog.php' onclick='getBlogID()' style ='text-decoration:none'>
+                            <a id='blogTab' href ='blog.php' onclick='getBlogID{$rowBlog['id']}();return false;' style ='text-decoration:none'>
                                 {$rowBlog['title']}
                             </a>
                         </td>
@@ -269,7 +270,7 @@
                             </td>
                             </tr>";
                     echo "</table>";  
-                    echo "<br>";                  
+                    echo "<br>";                 
                 }    
             break;
          }

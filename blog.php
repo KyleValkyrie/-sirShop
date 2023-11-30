@@ -1,9 +1,8 @@
 <?php 
     $id = null;
-    var_dump($_POST);
-    if (isset($_POST["id"] ) ) 
+    if (isset($_POST["blogID"] ) ) 
     {
-        $id =$_POST["id"];
+        $id =$_POST["blogID"];
         
         include_once("db_config.php");
         $cn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
@@ -11,8 +10,7 @@
         {
             die("Error connecting: ". $cn->connect_error);
         }
-        $sql = "select title, description, imageLink, authorName, dateOfPost, content
-        from blogs where id = '$id'";
+        $sql = "select * from blogs where id = '$id'";
         $result = $cn->query($sql);
         $row = $result->fetch_assoc();
             echo "<div id='header'>
@@ -34,24 +32,27 @@
                 </table>
                 <table id='author'>
                     <tr>
-                    <td rowspan=2 id='img'><img src='https://i1.sndcdn.com/avatars-000437089554-1mam5a-t500x500.jpg' ></td>
+                    <td rowspan=2 id='avatar'>
+                    <img src='{$row['avatar']}' 
+                    onerror='this.onerror=null;this.src='https://static.vocadb.net/img/tag/mainOrig/7099.png''>
+                    </td>
                     <td id = 'authorName'>Author:</td>
-                    <td>{$row['authorName']}</td>
+                    <td id='textName'>{$row['authorName']}</td>
                     </tr>
                     <tr>
                     <td colspan=2 id='bio'>Biography:</td>
                     </tr>
                     <tr>
-                    <td colspan=3 id='desc'>Placeholder</td>
+                    <td colspan=3 id='desc'>{$row['bio']}</td>
                     </tr>
                     <tr id='buttonHolder'>
                     <td colspan=3>
-                        <button>Back</button>
+                        <button id ='backButton' onclick='window.history.go(-1)'><img  src='backButton.png'></button>
                     </td>
                     </tr>
             </table>";
             echo "</div>";
-        } 
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,8 +68,22 @@
         background-color: black;
         font-family: 'Electrolize';
     }
+    #textName
+    {
+        text-decoration: overline underline;
+        color:#660D1A;
+        font-size:1.8rem;
+        font-weight:bolder;
+    }
+    #backButton
+    {
+        position:relative;
+        border: none;
+        background: none;
+    }
     #header
     {
+        text-decoration: overline underline;
         font-weight:bold;
         padding-top:20px;
         background-color:Black;
@@ -120,7 +135,7 @@
         display: inline-table;
         color: white;
     }
-    #img, img
+    #avatar,img
     {
         border-radius:90px; 
         height:143px;
