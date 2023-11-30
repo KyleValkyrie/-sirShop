@@ -9,6 +9,7 @@
 <style>
     body
     {
+        color:white;
         background-color: black;
         font-family: 'Electrolize';
     }
@@ -77,13 +78,23 @@
     }
     #backgroundHomepage
     {
-        posiion:absolute;
         padding-bottom: 10px;
         background-image: url("upscaled_artwork.jpg");
         filter: blur(1px);
         background-repeat: no-repeat;
         height: 900px;
         background-size: 100% 100%;
+    }
+    #backgroundContact
+    {
+        background-position: center;
+        padding-bottom: 10px;
+        background-image: url("background_Artwork.jpg");
+        height: 100%;
+        filter: blur(1px);
+        height: 900px;
+        background-repeat: no-repeat;
+        background-size: 600px 600px;
     }
     #author, #date
     {
@@ -146,10 +157,20 @@
         margin-top: 20px;
 
     }
-    body{
-        color:white;
+    .footer
+    { 
+       position: fixed;     
+       text-align: left;    
+       bottom: 0px; 
+       width: 100%;
     }
-    
+    #rights
+    {
+        padding-right:20px;
+        font-size:0.8rem;    
+        bottom: 0px;
+        text-align: right;
+    } 
 </style>
 <body>
     <!-- header for index page -->
@@ -211,146 +232,29 @@
             break;
                 //categories content
             case "2":
-
-                echo "
-               
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                ";
                 
             break;
                 //news content
-            case"3":
-                echo "<br>"; 
-                $idnew = null;
-                $cnnew = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-                if($cnnew->connect_error)
-                {
-                    die("Error connecting: ". $cnnew->connect_error);
-                }
-                $sqlnew = "select *
-                            from new order by id"; 
-                $resulnew = $cnnew->query($sqlnew);
-                while($rownew = $resultnew->fetch_assoc())
-                {
-                    if($idnew === null)
-                    {
-                        $idnew = $rownew["id"];
-                    }echo"$idnew";
-                    echo "<table>";
-                    echo "<tr>
-                        <td id ='imgnew' colspan ='1' rowspan ='4'>
-                                <img src = '{$rownew['imageLink']}'>
-                        </td>
-                        <td id ='namenew'>
-                            <a id='newTab' href ='new.php' style ='text-decoration:none'>
-                                {$rownew['title']}
-                            </a>
-                        </td>
-                          </tr>";  
-                    echo "<tr>
-                            <td id ='author'>
-                                Author name: {$rownew['authorName']}
-                            </td>
-                          </tr>";
-                    echo "<tr>
-                          <td id='date'>
-                              Date: {$rownew['dateOfPost']}
-                          </td>
-                        </tr>";
-                    echo "<tr>
-                            <td id='descBlog'>
-                                {$rownew['description']}
-                            </td>
-                            </tr>";
-                    echo "</table>";  
-                    echo "<br>";   
-                    echo "<form method='post' action='new.php' style='display:inline;'>";
-                    echo "<input type='hidden' name ='id' value = '{$idnew}'>";
-                    echo "<input type='hidden' name ='action' value='show'>";
-                }
-                
-                
-
-
+            case "3":
+               
             break;
                 //contact content
             case"4":
-                echo"
-                <head>
-    <meta charset='UTF-8;>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        table {
-            margin-top: auto; /* Đặt margin-top: auto để đẩy table xuống dưới cùng */
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #dddddd;
-            padding: 8px;
-            text-align: left;
-            
-        }
-        
-    </style>
-</head>
-<body>
-
-    <!-- Các phần nội dung khác của trang ở đây -->
-
-    <table>
-        <thead>
-            <tr>
-                <th><div>Welcome to dịch vụ hỗ trợ </div>
-<div>Tổng đài hỗ trợ (Miễn phí gọi)</div>
-<div>Khiếu nại: 778.779.779</div>
-<div>Bảo hành: 0909.778.779</div>
-              
-              
-              
-              </th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><p>
-                © 2018. Công ty cổ phần Thế Giới Di Động. GPDKKD: 0303217354 do sở KH & ĐT TP.HCM cấp ngày 02/01/2007. GPMXH: 238/GP-BTTTT do Bộ Thông Tin và Truyền Thông cấp ngày 04/06/2020.<br>
-                Địa chỉ: 128 Trần Quang Khải, P.Tân Định, Q.1, TP.Hồ Chí Minh. Địa chỉ liên hệ và gửi chứng từ: Lô T2-1.2, Đường D1, Đ. D1, P.Tân Phú, TP.Thủ Đức, TP.Hồ Chí Minh. Điện thoại: 028 38125960. Email: cskh@thegioimaytinh.com. Chịu trách nhiệm nội dung: kyle đẹp trai. Email: kylebaodeptrai@thegioimaytinh.com.
-                
-                </a>
-            </p>
-              
-              
-              
-              
-              </td>
-                
-            </tr>
-            <!-- Thêm các hàng khác nếu cần -->
-        </tbody>
-    </table>
-</body>
-</html>";
-
+                echo "<div id ='backgroundContact'></div>";
+                echo"<div class ='content'>";
+                echo"<p id='welcome'>Thank you for using our store page!</p>
+                <p id='message'>Contact infos can be view bellow, we hope you had a wonderful time browsing!</p>
+                <p id='message'>Feel free to contact us about any trouble you face, we are here to help!</p></div>";
+                echo"<div class = 'footer' id='support'>
+                        <p>Support lines:</p>
+                        <p>Warranty: <b style ='color:#660D1A; font-weight:bolder; font-size:1.2rem;'>0363490614</b></p>
+                        <p>Complain: <b style ='color:#660D1A; font-weight:bolder; font-size:1.2rem;'>0963794634</b></p>
+                    </div>
+                    <div class ='footer' id= 'rights'>
+                    <p id='rights'>© Æsir Inc. Laptops and PCs are property of their own supplier.Æsir of Vietnam Inc. Headquarters are in Tan Binh, Ward 15, Ho Chi Minh City</p>
+                        <p id='rights'>Powered by HTML, PHP and Javascript</p>
+                        <p id='rights'>Special thanks to Mr.Tran Hoang Binh and Mr.Tran Vu Dai for helping us in hard times!</p>
+                    </div>";
             break;
                 //blog content
             case"5":
