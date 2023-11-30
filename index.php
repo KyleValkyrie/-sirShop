@@ -162,15 +162,23 @@
        position: fixed;     
        text-align: left;    
        bottom: 0px; 
-       width: 100%;
+       width: 98.5%;
+       
     }
     #rights
     {
-        padding-right:20px;
+        
+        padding-right:5px;
         font-size:0.8rem;    
         bottom: 0px;
         text-align: right;
+        
     } 
+    #support
+    {  
+        background-color:#220C0C;
+        padding-left:10px;
+    }
 </style>
 <body>
     <!-- header for index page -->
@@ -247,8 +255,8 @@
                 <p id='message'>Feel free to contact us about any trouble you face, we are here to help!</p></div>";
                 echo"<div class = 'footer' id='support'>
                         <p>Support lines:</p>
-                        <p>Warranty: <b style ='color:#660D1A; font-weight:bolder; font-size:1.2rem;'>0363490614</b></p>
-                        <p>Complain: <b style ='color:#660D1A; font-weight:bolder; font-size:1.2rem;'>0963794634</b></p>
+                        <p>Warranty: <b style ='color:maroon; font-weight:bolder; font-size:1.3rem;'>0363490614</b></p>
+                        <p>Complain: <b style ='color:maroon; font-weight:bolder; font-size:1.3rem;'>0963794634</b></p>
                     </div>
                     <div class ='footer' id= 'rights'>
                     <p id='rights'>© Æsir Inc. Laptops and PCs are property of their own supplier.Æsir of Vietnam Inc. Headquarters are in Tan Binh, Ward 15, Ho Chi Minh City</p>
