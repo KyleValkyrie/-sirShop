@@ -129,6 +129,7 @@
     }
     li.menu
     {
+        font-weight:bold;
         display: inline;
         font-size: 20px;
     }
@@ -190,61 +191,139 @@
     }
     .news-grid
     {
-    position:relative;
-    top:  0%;
-    left: 50%;
-    width:95%;
-    transform: translate(-50%,0%);
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+        position:relative;
+        top:  0%;
+        left: 50%;
+        width:95%;
+        transform: translate(-50%,0%);
+        display: grid;
+        grid-template-columns: auto auto auto auto;
     }
     .news-item 
     {
-    background-color:#660D1A;
-    color:white;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    margin:20px;
-    padding: 20px;
-    font-size: 25px;
-    max-width:400px;
-    width:80%;
-    height:400px;
+        background-color:#660D1A;
+        color:white;
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        margin:20px;
+        padding: 20px;
+        font-size: 25px;
+        max-width:400px;
+        width:80%;
+        height:400px;
     }
     .news-item:hover
     {
         background-color:white;
         color:#660D1A;
     }
-    img.news
+    img.news, img.productImage
     {
-    max-width:100%;
-    max-height:auto;
-    width: 100%;
+        max-width:100%;
+        max-height:auto;
+        width: 100%;
     }
     span
     {
-    font-size:1rem;
-    padding:5px;
-    border-radius:30px;
-    border:1px solid;
+        font-size:1rem;
+        padding:5px;
+        border-radius:30px;
+        border:1px solid;
     }
     #newsType
     {
-    padding-bottom:5px;
+        padding-bottom:5px;
     }
     #newsDate
     {
-    font-size:1.3rem;
+        font-size:1.3rem;
     }
     #newsDesc
     {
-    font-size:1rem;
+        font-size:1rem;
     }
-    #newsTitle  
+    #newsTitle , #productName
     {
         font-size: 1.8rem;
         font-weight: bold;
-        color:#D30D13;
+        color:slategrey;
+    }
+    #categoriesHeader
+    {
+        text-align:Center;
+        width:100%;
+        color:crimson;
+        font-size:2.4rem;
+        font-weight:bolder;
+        border: 2px solid;
+        border-color: crimson;
+    }
+    .categoriesMenu
+    {
+        display: inline-block;
+        padding-top:1px;
+        width:20%;
+    }
+    .categoryOptions
+    {
+        color:crimson;
+        font-weight:bold;
+        text-align :center;
+        font-size:1.5rem;
+        cursor:pointer;
+        list-style-type: none;
+        border: 2px solid;
+        height:40px;
+    }
+    .categoryOptions:hover
+    {
+        background-color: white;
+        color:Red;
+    }
+    .productDisplay
+    {
+        width:79.4%;
+        display: inline-block;
+        position:absolute;    
+    }
+    #productGrid
+    {
+        position:relative;
+        top:  0%;
+        left: 50%;
+        transform: translate(-50%,0%);
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+    }
+    .product-item
+    {
+        position:relative;
+        background-color:#660D1A;
+        display:inline-block;
+        color:white;
+        border: 1px solid ;
+        margin:20px;
+        padding: 20px;
+        font-size: 20px;
+        max-width:400px;
+        width:80%;
+        height:450px;
+    }
+    .product-item:hover
+    {
+        background-color:white;
+        color:#660D1A;
+    }
+    #productType
+    {
+        padding-top:10px;
+        padding-bottom:5px;
+    }
+    #productPrice
+    {
+        font-size:1.4rem;
+        position: absolute;
+        bottom:10px;
+        right:10px;
     }
 </style>
 <body>
@@ -300,13 +379,89 @@
                 Welcome to Æsir Store!
                 </p>";
                 echo "<p id = 'message'>
-                    No.1 place for all your pc and laptops needs! <br>
+                    No.1 place for all your pc and laptops needs!<br>
                 </p>";
                 echo "</div>";
             break;
                 //categories content
             case "2":
-                
+               
+                //display menu
+                    echo"<div id='categoriesHeader'>Product categories</div>";
+                    echo "<div class ='categoriesMenu'>";
+                    $idCategories = null;
+                    if(isset($_GET["id"]))
+                    {
+                        $idCategories = $_GET["id"];
+                    }
+                    $cnCategories = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+                    if($cnCategories->connect_error)
+                    {
+                        die("Error connecting: ". $cnNews->connect_error);
+                    }
+                    $sqlCategories = "select distinct category from products";
+                    $resultCategories = $cnCategories->query($sqlCategories);
+                    while($rowCategories = $resultCategories->fetch_assoc())
+                    {
+                        $functionName = str_replace(' ','',$rowCategories['category']);
+                        echo "<li class='categoryOptions'><a onclick='getCategoryFor{$functionName}();'>
+                        {$rowCategories['category']}
+                        </a></li>";
+                        //get category via hidden form
+                        echo"<form method='post' action='' id='{$functionName}'>
+                        <input type='hidden' name='category' value='{$rowCategories['category']}'/>
+                        </form>"; 
+                        //submit category via js
+                        echo "<script>
+                        function getCategoryFor{$functionName}()
+                        {
+                            document.getElementById('{$functionName}').submit();
+                        }
+                        </script>";
+                    }
+                    echo "</div>";
+                //display products
+                    echo"<div class ='productDisplay'>";
+                    echo    "<div id ='productGrid'>";
+                    if (isset($_POST["category"]))
+                    {
+                        $sqlProduct = "select id, name, category, image, price, stock
+                        from products where category = '{$_POST['category']}' order by id";
+                    }
+                    else
+                    {
+                        $sqlProduct = "select id, name, category, image, price, stock
+                        from products order by id";           
+                    }
+                    $resultProduct = $cnCategories->query($sqlProduct);
+                    while($rowProduct = $resultProduct->fetch_assoc())
+                    {
+                    echo "<div class='product-item'>";
+                    echo "<div><img class ='productImage' src='{$rowProduct['image']}'></div>
+                        <div id='productType'><span>{$rowProduct['category']}</span></div>
+                        <div>
+                        <a id ='productName' href ='product.php' onclick='getProductID{$rowProduct['id']}();return false;'>
+                        {$rowProduct['name']}
+                        </a>
+                        </div>
+                        <div id ='productNumber'>In stock: {$rowProduct['stock']} units</div>";
+                        $price = number_format($rowProduct["price"]);
+                    echo "<div id ='productPrice'>Price: {$price}vnd</div>";
+                    //get id via hidden form
+                    echo"<form method='post' action='product.php' id='{$rowProduct['id']}'>
+                      <input type='hidden' name='productID' value='{$rowProduct['id']}'/>
+                      </form>";   
+                    //submit id via js
+                    echo "<script>
+                    function getProductID{$rowProduct['id']}()
+                    {
+                        document.getElementById('{$rowProduct['id']}').submit();
+                    }
+                    </script>";  
+                    echo "</div>"; 
+                    }
+                    echo "</div>";
+                    echo "</div>";
             break;
                 //news content
             case "3":
@@ -350,7 +505,9 @@
             break;
                 //contact content
             case"4":
+                //background image
                 echo "<div id ='backgroundContact'></div>";
+                //content for contact page
                 echo"<div class ='content'>";
                 echo"<p id='thankyou'>Thank you for using our store page!</p>
                 <p id='message'>Feel free to contact us, we are here to help!</p>
@@ -423,8 +580,7 @@
                 }  
                 $cnBlog->close();  
             break;
-         }
-        
+         }  
         ?>
 </body>
 </html>

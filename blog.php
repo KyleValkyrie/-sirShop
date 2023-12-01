@@ -151,7 +151,7 @@
                         <button id ='backButton' onclick='window.history.go(-1)'><img  src='backButton.png'></button>
                     </td>
                     </tr>
-            </table>";
+                </table>";
             echo "</div>";
         $cn ->close();
     } 
