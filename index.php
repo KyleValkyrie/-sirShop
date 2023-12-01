@@ -43,9 +43,19 @@
     {
         height:30px;
     }
+    a
+    {
+        text-decoration: none;
+    }
     #welcome
     {
-        font-size: 40px;
+        font-size: 80px;
+        color: crimson;
+    }
+    #thankyou
+    {
+        font-size: 80px;
+        color: whitesmoke;
     }
     #logo
     {
@@ -57,7 +67,8 @@
     }
     #message
     {
-        font-size: 25px;
+        font-size: 30px;
+        color:white ;
     }
     #header
     {
@@ -80,7 +91,7 @@
     {
         padding-bottom: 10px;
         background-image: url("upscaled_artwork.jpg");
-        filter: blur(1px);
+        filter: blur(0.5px);
         background-repeat: no-repeat;
         height: 900px;
         background-size: 100% 100%;
@@ -103,7 +114,6 @@
     }
     .content
     {
-        position:absolute; /* or absolute */
         color: white;
         text-align: center;
         font-size: 15px;
@@ -166,8 +176,7 @@
        
     }
     #rights
-    {
-        
+    {  
         padding-right:5px;
         font-size:0.8rem;    
         bottom: 0px;
@@ -178,6 +187,64 @@
     {  
         background-color:#220C0C;
         padding-left:10px;
+    }
+    .news-grid
+    {
+    position:relative;
+    top:  0%;
+    left: 50%;
+    width:95%;
+    transform: translate(-50%,0%);
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    }
+    .news-item 
+    {
+    background-color:#660D1A;
+    color:white;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    margin:20px;
+    padding: 20px;
+    font-size: 25px;
+    max-width:400px;
+    width:80%;
+    height:400px;
+    }
+    .news-item:hover
+    {
+        background-color:white;
+        color:#660D1A;
+    }
+    img.news
+    {
+    max-width:100%;
+    max-height:auto;
+    width: 100%;
+    }
+    span
+    {
+    font-size:1rem;
+    padding:5px;
+    border-radius:30px;
+    border:1px solid;
+    }
+    #newsType
+    {
+    padding-bottom:5px;
+    }
+    #newsDate
+    {
+    font-size:1.3rem;
+    }
+    #newsDesc
+    {
+    font-size:1rem;
+    }
+    #newsTitle  
+    {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color:#D30D13;
     }
 </style>
 <body>
@@ -217,7 +284,8 @@
         }
         echo "</ul>";
         ?>
-        </div>
+    </div>
+
         <?php
          switch ($idPage)
          {
@@ -232,9 +300,7 @@
                 Welcome to Æsir Store!
                 </p>";
                 echo "<p id = 'message'>
-                    Fusce erat dui, venenatis et erat in, vulputate dignissim lacus. <br>
-                    Donec vitae tempus dolor,sit amet elementum lorem. <br>
-                    Ut cursus tempor turpis.
+                    No.1 place for all your pc and laptops needs! <br>
                 </p>";
                 echo "</div>";
             break;
@@ -244,15 +310,51 @@
             break;
                 //news content
             case "3":
-               
+                echo "<div class='news-grid'>";
+                    $idNews = null;
+                    $cnNews = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+                    if($cnNews->connect_error)
+                    {
+                        die("Error connecting: ". $cnNews->connect_error);
+                    }
+                    $sqlNews = "select id, title, description, imageLink, dateOfPost, type
+                                from news order by id";
+                    $resultNews = $cnNews->query($sqlNews);
+                    while($rowNews = $resultNews->fetch_assoc())
+                    {            
+                    echo "<div class='news-item'>";
+                    echo "<div><img class ='news' src='{$rowNews['imageLink']}'></div>
+                          <div id='newsType'><span>{$rowNews['type']}</span></div>
+                          <div id='newsDate'>Date: {$rowNews['dateOfPost']}</div>
+                          <div>
+                            <a id='newsTitle' href ='news.php' onclick='getNewsID{$rowNews['id']}();return false;' style ='text-decoration:none'>
+                                {$rowNews['title']}
+                            </a>
+                          </div>
+                          <div id='newsDesc'>{$rowNews['description']}</div>";
+                    //get id via hidden form
+                    echo"<form method='post' action='news.php' id='{$rowNews['id']}'>
+                      <input type='hidden' name='newsID' value='{$rowNews['id']}'/>
+                      </form>"; 
+                    //submit id via js
+                    echo "<script>
+                        function getNewsID{$rowNews['id']}()
+                        {
+                            document.getElementById('{$rowNews['id']}').submit();
+                        }
+                        </script>";
+                    echo "</div>";
+                    }
+                $cnNews->close();
+                echo "</div>";
             break;
                 //contact content
             case"4":
                 echo "<div id ='backgroundContact'></div>";
                 echo"<div class ='content'>";
-                echo"<p id='welcome'>Thank you for using our store page!</p>
-                <p id='message'>Contact infos can be view bellow, we hope you had a wonderful time browsing!</p>
-                <p id='message'>Feel free to contact us about any trouble you face, we are here to help!</p></div>";
+                echo"<p id='thankyou'>Thank you for using our store page!</p>
+                <p id='message'>Feel free to contact us, we are here to help!</p>
+                <p id='message'>Contact infos can be found below!</p></div>";
                 echo"<div class = 'footer' id='support'>
                         <p>Support lines:</p>
                         <p>Warranty: <b style ='color:maroon; font-weight:bolder; font-size:1.3rem;'>0363490614</b></p>
@@ -318,7 +420,8 @@
                             </tr>";
                     echo "</table>";  
                     echo "<br>";                 
-                }    
+                }  
+                $cnBlog->close();  
             break;
          }
         
