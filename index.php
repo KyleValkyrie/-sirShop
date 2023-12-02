@@ -25,6 +25,10 @@
         border-spacing: 1px;
         border-collapse:collapse;
     }
+    div
+    {
+    overflow:hidden;
+    }
     table:hover
     {
         color:black;
@@ -209,7 +213,7 @@
         font-size: 25px;
         max-width:400px;
         width:80%;
-        height:400px;
+        height:500px;
     }
     .news-item:hover
     {
@@ -231,11 +235,12 @@
     }
     #newsType
     {
-        padding-bottom:5px;
+        padding-top:10px;
+        padding-bottom:10px;
     }
     #newsDate
     {
-        font-size:1.3rem;
+        font-size:20px;
     }
     #newsDesc
     {
@@ -243,7 +248,7 @@
     }
     #newsTitle , #productName
     {
-        font-size: 1.8rem;
+        font-size: 30px;
         font-weight: bold;
         color:slategrey;
     }
@@ -273,6 +278,11 @@
         list-style-type: none;
         border: 2px solid;
         height:40px;
+    }
+    .categoryOptions:active
+    {
+        background-color: white;
+        color:Red;
     }
     .categoryOptions:hover
     {
@@ -306,7 +316,7 @@
         font-size: 20px;
         max-width:400px;
         width:80%;
-        height:450px;
+        height:500px;
     }
     .product-item:hover
     {
@@ -320,7 +330,7 @@
     }
     #productPrice
     {
-        font-size:1.4rem;
+        font-size:20px;
         position: absolute;
         bottom:10px;
         right:10px;
@@ -385,7 +395,6 @@
             break;
                 //categories content
             case "2":
-               
                 //display menu
                     echo"<div id='categoriesHeader'>Product categories</div>";
                     echo "<div class ='categoriesMenu'>";
@@ -404,7 +413,8 @@
                     while($rowCategories = $resultCategories->fetch_assoc())
                     {
                         $functionName = str_replace(' ','',$rowCategories['category']);
-                        echo "<li class='categoryOptions'><a onclick='getCategoryFor{$functionName}();'>
+                        echo "<li id ='{$rowCategories['category']}' name ='$functionName' class='categoryOptions'>
+                        <a id ='options' onclick='getCategoryFor{$functionName}();'>
                         {$rowCategories['category']}
                         </a></li>";
                         //get category via hidden form
@@ -413,14 +423,14 @@
                         </form>"; 
                         //submit category via js
                         echo "<script>
-                        function getCategoryFor{$functionName}()
-                        {
+                        function getCategoryFor{$functionName}(event)
+                        {   
                             document.getElementById('{$functionName}').submit();
                         }
                         </script>";
                     }
                     echo "</div>";
-                //display products
+                    //display products
                     echo"<div class ='productDisplay'>";
                     echo    "<div id ='productGrid'>";
                     if (isset($_POST["category"]))
@@ -457,7 +467,8 @@
                     {
                         document.getElementById('{$rowProduct['id']}').submit();
                     }
-                    </script>";  
+                    </script>"; 
+                    //set active class for menu
                     echo "</div>"; 
                     }
                     echo "</div>";

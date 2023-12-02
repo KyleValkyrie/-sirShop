@@ -27,7 +27,7 @@
 #title
 {
     padding-left: 50px;
-    font-size:3rem;
+    font-size:70px;
     font-weight:bold;
     color:#660D1A;
 }

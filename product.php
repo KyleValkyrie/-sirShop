@@ -53,7 +53,7 @@ table
 {
     text-align :center;;
     color:crimson;
-    font-size:2.8rem;
+    font-size:50px;
     height:15%;
 }
 #type
@@ -105,7 +105,7 @@ span
 button
 {
     margin:30px 30px;
-    background-color: crimson;
+    background-color: maroon;
     color:white;
     font-family: 'Electrolize';
     font-size:1.5rem;
@@ -114,7 +114,11 @@ button
 }
 button:hover
 {
-    filter: contrast(120%);
+    filter: contrast(70%);
+}
+form
+{
+    display:inline-block;
 }
 </style>
 <body>
@@ -158,11 +162,28 @@ echo"<table>
 </tr>
 <tr>
     <td id='buttons'>
-    <button onclick='window.history.go(-1)'>Buy</button>
-    <button onclick='window.history.go(-1)'>Back</button>     
+    <form>
+    <input  type='hidden' name='stock' value ='{$boughtStock}'>
+    <input type='hidden' name='productID' value ='{$row['id']}'>
+    <button type='submit' formmethod='post'>Buy</button>
+    </form>
+    <button onclick='redirect()'>Back</button>     
     </td>";
 echo "</tr>
-</table>"; 
+</table>
+<script>
+function redirect()
+{
+    window.location='index.php?id=2'
+}
+</script>"; 
+
+if(isset($_POST["stock"]))
+{
+    $sqlRemoveStock = "UPDATE products SET stock = stock - 1 WHERE id = {$_POST['productID']}";
+    $cn->query($sqlRemoveStock);
+    header("Location: index.php?id=2"); 
+}
 ?>
 </body>
 </html>
