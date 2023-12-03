@@ -143,7 +143,8 @@ CREATE TABLE  IF NOT EXISTS `mydb`.`products` (
 	`image` TEXT NOT NULL , 
 	`stock` BIGINT NOT NULL , 
 	`price` BIGINT NOT NULL , 
-	`spec` TEXT NOT NULL , 
+	`spec` TEXT NOT NULL ,
+	CONSTRAINT NO_NEGATIVE CHECK ('stock'>=0), 
 	PRIMARY KEY (`id`));
 INSERT INTO `products` (`id`, `name`, `category`, `image`, `stock`, `price`, `spec`) 
 VALUES (NULL, 
@@ -160,7 +161,7 @@ VALUES (NULL,
 		'https://techpointretail.com/wp-content/uploads/2023/05/Vivobook-14-OLED-X1405ZA-black-1.jpg', 
 		'700', 
 		'12500000', 
-		'CPU: Intel Core i5 12500H2.5GHz  RAM: 8GB DDR4 2 khe (1 slot 8 GB onboard + 1 empty slot)3200 MHz  Hard drive:  SSD NVMe PCIe 512GB  Screen: 14inch 2.8K (2880 x 1800) - OLED 16:1090Hz  VGU: Card tích hợp Intel UHD  Ports: HDMIUSB Type-C1 x USB 2.02 x USB 3.2Jack tai nghe 3.5 mm  OS: Windows 11 Home SL  Design: Plastic shell  Size and weight: 317.1 mm long- 222 mm wide- 19.9 mm thick- 1.6 kg in weight');
+		'CPU: Intel Core i5 12500H2.5GHz  RAM: 8GB DDR4 2 khe (1 slot 8 GB onboard + 1 empty slot)3200 MHz  Hard drive:  SSD NVMe PCIe 512GB  Screen: 14inch 2.8K (2880 x 1800) - OLED 16:1090Hz  VGU: Intergrated Intel UHD  Ports: HDMIUSB Type-C1 x USB 2.02 x USB 3.2  Headphone jack: 3.5 mm  OS: Windows 11 Home SL  Design: Plastic shell  Size and weight: 317.1 mm long- 222 mm wide- 19.9 mm thick- 1.6 kg in weight');
 INSERT INTO `products` (`id`, `name`, `category`, `image`, `stock`, `price`, `spec`) 
 VALUES (NULL, 
 		'Laptop Lenovo Gaming Legion 5 15IAH7 | i5 12500H | 16GB | 512GB | 15.6\"FHD | Nvidia RTX 3050 4GB', 
@@ -185,3 +186,26 @@ VALUES (NULL,
 		'10000', 
 		'9850000', 
 		'CPU: AMD 4700S Desktop Kit (8C / 16T, 4.0 / 3.6GHz, 12MB Cache)  RAM: 16GB GDDR6 onboard  SSD: Kingston A400 240GB SATA3 2.5 incH  VGA: Card AMD RX550/2GB');
+INSERT INTO `products` (`id`, `name`, `category`, `image`, `stock`, `price`, `spec`) 
+VALUES (NULL, 
+		'Laptop Dell Gaming G15 5530 (I7-13650HX, RAM 8GB, SSD 1TB, RTX 4050 6GB, 15.6’’ FHD Screen) NK BH', 
+		'Gaming Laptop', 
+		'https://bizweb.dktcdn.net/thumb/large/100/362/971/products/dell-gaming-g15-5530-g155530013wh-intel-core-i7-13650hx-16gb-ddr5-1tb-ssd-rtx-4060-8gb-15-6-inc-full-hd-w11-home-gaming-notebook-y1.jpg?v=1693107161527', 
+		'900', 
+		'26900000', 
+		'CPU: Core i7 13650HX (14 cores, 20 threads, up to 4.90 GHz Turbo Boost Max, 24 MB Cache)  RAM: 8GB DDR5 4800MHz, Max 32GB SDRAM  Hard drive: 1TB SSD M.2 2280 PCIe \r\n Screen: 15.6″ FHD (1920×1080) 120Hz, 3ms, sRGB-100%, ComfortViewPlus, NVIDIA G-SYNC+DDS Display  VGA: NVIDIA GeForce RTX 4050 6GB');
+INSERT INTO `products` (`id`, `name`, `category`, `image`, `stock`, `price`, `spec`) 
+VALUES (NULL, 
+		'NCPC Ultra Gaming 12 (Core I5 13600K/ Z690/ 32GB RAM/ 250GB SSD/ RTX 3060 Ti/ 750W)', 
+		'Gaming PC', 
+		'https://nguyencongpc.vn/media/product/250-23732-ncpc-ultra-gaming-12.jpg', 
+		'350', 
+		'44500000', 
+		'CPU Intel Core i5-13600K (3.50 Ghz, up to 5.10GHz, 14 Cores 20 Threads, 24 MB Cache, Raptor Lake)  Mainboard NXXT N7 Z690 White  Ram ADATA XPG SPECTRIX D50 8GB DDR4 3200 White (SL: 4c)   SSD Kingston NV1 250GB NVMe PCIe Gen 3.0 x 4 (SNVS/250G)  VGA:  Gigabyte RTX 3060 Ti VISION OC 8G  ');
+INSERT INTO `products` (`id`, `name`, `category`, `image`, `stock`, `price`, `spec`) 
+VALUES (NULL, 
+		'PC Sharkoon 03 (I7-13700K/ Z690/ 32GB RAM/ RTX 3060 Ti)', 
+		'Gaming PC', 
+		'https://nguyencongpc.vn/media/product/250-23959-pc-sharkoon-03.jpg', 
+		'700', '38400000', 
+		'CPU Intel Core i7-13700K (Up To 5.40GHz, 16 Cores 24 Thread, 30M Cache, Raptor Lake)  Mainboard Asus TUF Z690 Plus Gaming D5  	Ram Kingston FURY Beast RGB 32GB (2x16GB) DDR5 bus 5600Mhz (KF556C40BBAK2-32)  SDD: Kingston NV2 500GB PCIe 4.0 x4 NVMe M.2 (SNV2S/500G)  VGA:ASUS DUAL RTX 3060 Ti OC 8GB');
